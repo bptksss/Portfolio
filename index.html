@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baptiste Rousset — Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #e0e0e0;
+      cursor: url('images/vintage-cursor.png'), auto;
+    }
+    .desktop {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('images/mac-vintage-bg.png');
+      background-size: cover;
+    }
+    .dossier {
+      position: absolute;
+      width: 80px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .dossier img {
+      width: 100%;
+    }
+    #clock {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: black;
+      font-size: 14px;
+    }
+    .window {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80vw;
+      height: 80vh;
+      background: white;
+      border: 2px solid black;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+    }
+    .window-bar {
+      background: #ccc;
+      padding: 5px;
+      text-align: right;
+    }
+    .close-btn {
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .hidden {
+      display: none;
+    }
+    iframe {
+      flex: 1;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="desktop">
+    <div id="clock"></div>
+    <div class="dossier" style="top: 200px; left: 100px;" onclick="openWindow('projets/projet1.pdf')">
+      <img src="images/folder1.png" alt="Projet 1">
+      <span>Projet 1</span>
+    </div>
+    <div class="dossier" style="top: 300px; left: 250px;" onclick="openWindow('projets/projet2.pdf')">
+      <img src="images/folder2.png" alt="Projet 2">
+      <span>Projet 2</span>
+    </div>
+    <div class="dossier" style="top: 180px; left: 400px;" onclick="openWindow('projets/projet3.pdf')">
+      <img src="images/folder3.png" alt="Projet 3">
+      <span>Projet 3</span>
+    </div>
+  </div>
+
+  <div id="window" class="window hidden">
+    <div class="window-bar">
+      <span class="close-btn" onclick="closeWindow()">X</span>
+    </div>
+    <iframe id="pdfViewer" src="" frameborder="0"></iframe>
+  </div>
+
+  <script>
+    function openWindow(pdfPath) {
+      const viewer = document.getElementById('pdfViewer');
+      const win = document.getElementById('window');
+      viewer.src = pdfPath;
+      win.classList.remove('hidden');
+    }
+
+    function closeWindow() {
+      const viewer = document.getElementById('pdfViewer');
+      const win = document.getElementById('window');
+      viewer.src = '';
+      win.classList.add('hidden');
+    }
+
+    function updateClock() {
+      const clock = document.getElementById('clock');
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      clock.textContent = `${hours}:${minutes}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
